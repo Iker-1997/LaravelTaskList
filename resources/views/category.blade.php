@@ -1,11 +1,9 @@
-<!-- resources/views/tasks.blade.php -->
-
 @extends('layouts.app')
 
 @section('content')
 
     <div class="panel-body">
-        <form action="{{ url('task') }}" method="POST" class="form-horizontal">
+        <form action="{{ url('categories') }}" method="POST" class="form-horizontal">
             {{ csrf_field() }}
             <div class="form-group">
                 <label for="task" class="col-sm-3 control-label">Categories</label>
@@ -30,13 +28,13 @@
                         <th>&nbsp;</th>
                     </thead>
                     <tbody>
-                        @foreach ($categories as $categories)
+                        @foreach ($categories as $category)
                             <tr>
                                 <td class="table-text">
-                                    <div>{{ $categories->name }}</div>
+                                    <div>{{ $category->name }}</div>
                                 </td>
                                 <td>
-                                    <form action="{{ url('categories/'.$categories->id) }}" method="POST">
+                                    <form action="{{ url('category/'.$category->id) }}" method="POST">
                                         {{ csrf_field() }}
                                         {{ method_field('DELETE') }}
                                         <button type="submit" class="btn btn-danger">DELETE</button>

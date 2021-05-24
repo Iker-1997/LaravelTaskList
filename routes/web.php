@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+use App\Models\Task;
+use App\Models\Category;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +16,110 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/categories', function () {
+    $categories = Category::orderBy('created_at', 'asc')->get();
+
+    return view('tasks', [
+        'categories' => $categories
+    ]);
+});
+
+Route::post('/categories', function (Request $request) {
+    $validator = Validator::make($request->all(), [
+        'name' => 'required|max:20',
+    ]);
+
+    if ($validator->fails()) {
+        return redirect('/')
+            ->withInput()
+            ->withErrors($validator);
+    }
+
+    $category = new Category;
+    $category->name = $request->name;
+    $category->save();
+
+    return redirect('/categories');
+});
+
+
 Route::get('/', function () {
-    return view('welcome');
+    $tasks = Task::orderBy('created_at', 'asc')->get();
+    $categories = Category::all();
+
+    return view('tasks', [
+        'tasks' => $tasks, 'categories' => $categories
+    ]);
+});
+/**
+ * Add New Task
+ */
+Route::post('/task', function (Request $request) {
+    $validator = Validator::make($request->all(), [
+        'name' => 'required|max:20',
+    ]);
+
+    if ($validator->fails()) {
+        return redirect('/')
+            ->withInput()
+            ->withErrors($validator);
+    }
+
+    $task = new Task;
+    $task->name = $request->name;
+    $task->cat_id = $request->task_cat;
+    $task->save();
+
+    return redirect('/');
+});
+
+/**
+ * Delete Task
+ */
+Route::delete('/task/{task}', function (Task $task) {
+    $task->delete();
+
+    return redirect('/');
+});
+
+
+Route::get('/category', function () {
+    $categories = Category::orderBy('created_at', 'asc')->get();
+
+    return view('category', [
+        'categories' => $categories
+    ]);
+});
+
+Route::post('/categories', function (Request $request) {
+    $validator = Validator::make($request->all(), [
+        'name' => 'required|max:20',
+    ]);
+
+    if ($validator->fails()) {
+        return redirect('/category')
+            ->withInput()
+            ->withErrors($validator);
+    }
+
+    $task = new Category;
+    $task->name = $request->name;
+    $task->save();
+
+    return redirect('/category');
+});
+
+
+Route::delete('/category/{category}', function (Category $category) {
+    $category->delete();
+
+    return redirect('/category');
+});
+
+Route::get('/catlist', function() {
+    $cats = Category::all();
+
+    return view('catlist', [
+        'cats' => $cats,
+    ]);
 });

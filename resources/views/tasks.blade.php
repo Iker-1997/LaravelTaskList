@@ -2,7 +2,7 @@
 
 @section('content')
 
-<p><a href="/catlist">Tasklist</a></p>
+<p><a href="/catlist">Tasks per categories</a></p>
 
     <div class="panel-body">
 
@@ -29,11 +29,10 @@
 
     @if (count($tasks) > 0)
         <div class="panel panel-default">
-            <div class="panel-heading">Current Tasks</div>
             <div class="panel-body">
                 <table class="table table-striped task-table">
                     <thead>
-                        <th>Task</th>
+                        <th>Current Tasks</th>
                         <th>&nbsp;</th>
                     </thead>
                     <tbody>
