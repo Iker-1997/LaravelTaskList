@@ -16,14 +16,6 @@ use App\Models\Category;
 |
 */
 
-Route::get('/categories', function () {
-    $categories = Category::orderBy('created_at', 'asc')->get();
-
-    return view('tasks', [
-        'categories' => $categories
-    ]);
-});
-
 Route::post('/categories', function (Request $request) {
     $validator = Validator::make($request->all(), [
         'name' => 'required|max:20',
@@ -39,7 +31,7 @@ Route::post('/categories', function (Request $request) {
     $category->name = $request->name;
     $category->save();
 
-    return redirect('/categories');
+    return redirect('/category');
 });
 
 
@@ -89,24 +81,6 @@ Route::get('/category', function () {
     return view('category', [
         'categories' => $categories
     ]);
-});
-
-Route::post('/categories', function (Request $request) {
-    $validator = Validator::make($request->all(), [
-        'name' => 'required|max:20',
-    ]);
-
-    if ($validator->fails()) {
-        return redirect('/category')
-            ->withInput()
-            ->withErrors($validator);
-    }
-
-    $category = new Category;
-    $category->name = $request->name;
-    $category->save();
-
-    return redirect('/category');
 });
 
 
