@@ -102,9 +102,9 @@ Route::post('/categories', function (Request $request) {
             ->withErrors($validator);
     }
 
-    $task = new Category;
-    $task->name = $request->name;
-    $task->save();
+    $category = new Category;
+    $category->name = $request->name;
+    $category->save();
 
     return redirect('/category');
 });
