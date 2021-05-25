@@ -119,7 +119,7 @@ Route::delete('/category/{category}', function (Category $category) {
 Route::get('/catlist', function() {
     $cats = Category::all();
 
-    return view('catlist', [
+    return view('catList', [
         'cats' => $cats,
     ]);
 });
