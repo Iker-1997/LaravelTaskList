@@ -5,7 +5,7 @@
     <div class="panel-body">
         @include('common.errors')
         <form action="{{ url('categories') }}" method="POST" class="form-horizontal">
-            {{ csrf_field() }}
+            @csrf
             <div class="form-group">
                 <label for="task" class="col-sm-3 control-label">Categories</label>
                 <div class="col-sm-6">
@@ -36,7 +36,7 @@
                                 </td>
                                 <td>
                                     <form action="{{ url('category/'.$category->id) }}" method="POST">
-                                        {{ csrf_field() }}
+                                        @csrf
                                         {{ method_field('DELETE') }}
                                         <button type="submit" class="btn btn-danger">DELETE</button>
                                     </form>
